@@ -30,6 +30,10 @@
             android:name=".LikesDetails"
             android:label="@string/title_activity_likes_details" >
         </activity>
+
+        <service
+            android:name=".WaitLocationService"
+            android:exported="false"/>
     </application>
 
 </manifest>
