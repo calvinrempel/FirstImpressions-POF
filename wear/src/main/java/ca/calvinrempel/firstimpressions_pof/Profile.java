@@ -32,6 +32,7 @@ public class Profile {
     {
         String[] date;
         JSONArray likeArray;
+        JSONObject tmp;
         TreeSet<String> likeList;
         birthDate = Calendar.getInstance();
         likes = new HashMap<String, TreeSet<String>>();
@@ -49,10 +50,10 @@ public class Profile {
                     Integer.parseInt(date[1])-1,    // Month is 0 based
                     Integer.parseInt(date[2])       // Day
             );
-
+            tmp = obj.getJSONObject("likes");
             // Populate the likes with values
             for (int i = 0; i < LIKES.length; i++) {
-                likeArray = obj.getJSONArray(LIKES[i]);
+                likeArray = tmp.getJSONArray(LIKES[i]);
                 likeList = new TreeSet<String>();
 
                 // Iterate through a single type of like
@@ -63,7 +64,7 @@ public class Profile {
                 likes.put( LIKES[i], likeList );
             }
         }catch ( JSONException e ){
-            Log.d( "Profile JSON", e.getLocalizedMessage() );
+            Log.d( "Profile JSON", obj.toString() );
         }catch ( MalformedURLException e ){
             Log.d( "Profile URL", e.getLocalizedMessage() );
         }
