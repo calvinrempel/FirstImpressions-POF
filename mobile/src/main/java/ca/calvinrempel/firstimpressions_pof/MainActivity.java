@@ -122,8 +122,6 @@ public class MainActivity extends Activity
         voiceNotifyDetails.add("here");
         voiceNotifyDetails.add("can't come");
 
-        sendNotification("Hello", "Test");
-
         Mongo.getProfile( new MongoReceiver() {
             @Override
             public void process(JSONArray result) {
@@ -163,7 +161,7 @@ public class MainActivity extends Activity
         msgIntent.putExtra("arrivalTime", ARRIVAL_WAIT);
         msgIntent.putExtra("talkingTime", TALKING_WAIT);
         msgIntent.putExtra("myId", MY_ID);
-        msgIntent.putExtra("otherId", meeting.getOther(MY_ID));
+        msgIntent.putExtra("otherId", 2);
 
         // Start the waiting service
         startService(msgIntent);
