@@ -73,7 +73,13 @@ public class Profile {
 
     public String getName(){ return name; }
     public String getGender(){ return gender; }
-    public Calendar getBirthDate(){ return birthDate; }
+    public String getBirthDate()
+    {
+        String result = birthDate.get(Calendar.DAY_OF_MONTH) + "/"
+                + birthDate.get(Calendar.MONTH) + "/"
+                + birthDate.get(Calendar.YEAR);
+        return result;
+    }
     public HashMap<String,TreeSet<String>> getLikes(){ return likes; }
     public URL getPicture(){ return picture; }
     public int getId(){ return id; }
