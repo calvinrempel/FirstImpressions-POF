@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class LikesDetails extends Activity
 {
     ListView listView;
@@ -32,7 +34,7 @@ public class LikesDetails extends Activity
         Profile p = Data.getRhea();
 
         //Populate this from the JSON
-        String[] likes = p.getLikeList( i.getStringExtra("category").toLowerCase() );
+        ArrayList<String> likes = p.getLikeList( i.getStringExtra("category").toLowerCase() );
 
         //define a new adapter for the list
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item_details, R.id.textView, likes);

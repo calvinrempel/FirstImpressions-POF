@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.TreeSet;
@@ -77,5 +78,11 @@ public class Profile {
     public URL getPicture(){ return picture; }
     public int getId(){ return id; }
     public int getAge(){ return 2015-birthDate.get(Calendar.YEAR); }
-    public String[] getLikeList( String s ){ return likes.get(s).toArray( new String[LIKES.length] ); }
+    public ArrayList<String> getLikeList( String s ){
+        ArrayList<String> results = new ArrayList<>();
+        TreeSet<String> likeList = likes.get( s );
+        for( String str : likeList )
+            results.add( str );
+        return results;
+    }
 }
