@@ -26,7 +26,7 @@ public class ContactInfo extends Activity {
         setContentView(R.layout.activity_contact_info);
 
         // Set the custom fonts
-        FontManager.setFont(this, (TextView) findViewById(R.id.date), "cicero.ttf");
+        FontManager.setFont(this, (TextView) findViewById(R.id.name), "cicero.ttf");
         FontManager.setFont(this, (TextView) findViewById(R.id.age), "cicero.ttf");
         FontManager.setFont(this, (TextView) findViewById(R.id.birthday), "cicero.ttf");
         FontManager.setFont(this, (TextView) findViewById(R.id.gender), "cicero.ttf");
