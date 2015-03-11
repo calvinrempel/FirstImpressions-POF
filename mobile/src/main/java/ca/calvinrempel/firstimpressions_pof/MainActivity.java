@@ -17,6 +17,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.Wearable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -24,12 +27,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * MainActivity implements the handheld portion of the app that
- */
+
 public class MainActivity extends Activity
 {
     private FencedMeetingManager meetingManager;
+    private GoogleApiClient googleClient;
     private static final int MY_ID = 1;
 
     /** The request code used by this application for voice command */
@@ -126,30 +128,7 @@ public class MainActivity extends Activity
         voiceNotifyDetails.add("here");
         voiceNotifyDetails.add("can't come");
 
-        //add notification features
-        NotificationCompat.WearableExtender wearableExtender =
-                new NotificationCompat.WearableExtender()
-                        .setHintShowBackgroundOnly(true);
-
-        Notification notification =
-                new NotificationCompat.Builder(this)
-                        .setVibrate(new long[] {100, 250, 100, 250, 100, 25})
-                        .setLights(Color.YELLOW, 500, 500)
-                        .setSmallIcon(R.drawable.fish)
-                        .setLargeIcon(BitmapFactory.decodeResource(
-                                getResources(), R.drawable.fishes))
-                        .setColor(getResources().getColor(R.color.wallet_holo_blue_light))
-                        .setContentTitle("Your date has arrived.")
-                        .setContentText("Susan has arrived at your meeting location!")
-                        .extend(wearableExtender)
-                        .build();
-
-        NotificationManagerCompat notificationManager =
-                NotificationManagerCompat.from(this);
-
-        //fire off a notification
-        int notificationId = 1;
-        notificationManager.notify(notificationId, notification);
+        sendNotification("Hello", "Test");
     }
 
     /**
@@ -204,11 +183,13 @@ public class MainActivity extends Activity
     {
         public void onNowHere(FencedMeeting meeting)
         {
+            sendNotification("BOOPITY BEEP BOOP", "You have arrived at your destination.");
             Log.d("GEO", "User: " + meeting.getOtherUserId() + " now here.");
         }
 
         public void onNoLongerHere(FencedMeeting meeting)
         {
+            sendNotification("BOOPITY BEEP BOOP", "Why you leavin' bro?.");
             Log.d("GEO", "User: " + meeting.getOtherUserId() + " no longer here.");
         }
 
@@ -409,6 +390,12 @@ public class MainActivity extends Activity
     // SAMPLE CODE FOR GETTING A MEETING BY USER ID
     public void getMeeting()
     {
+        // Get the id number from the EditText box
+        int id = Integer.parseInt(((EditText) findViewById(R.id.txtId)).getText().toString());
+
+        // Result TextView
+        final TextView resultText = (TextView)findViewById(R.id.txtResult);
+
         // getMeetings takes a handler and an integer ID for the user you're searching for
         Mongo.getMeetings(
                 // Anonymous inner class handler for result of Mongo call
@@ -424,4 +411,42 @@ public class MainActivity extends Activity
                     }
                 } ,MY_ID );
     }
+
+    /**
+     * @Author Rhea Lauzon
+     * @param title -- Title of the notification
+     * @param description -- Description of the notification
+     * Sends a notification to the wearable
+     */
+    public void sendNotification(String title, String description)
+    {
+        //add notification features
+        NotificationCompat.WearableExtender wearableExtender =
+                new NotificationCompat.WearableExtender()
+                        .setHintShowBackgroundOnly(true);
+
+        Notification notification =
+                new NotificationCompat.Builder(this)
+                        .setVibrate(new long[] {100, 250, 100, 250, 100, 25})
+                        .setLights(Color.BLUE, 500, 500)
+                        .setSmallIcon(R.drawable.fish)
+                        .setLargeIcon(BitmapFactory.decodeResource(
+                                getResources(), R.drawable.fishes))
+                        .setColor(getResources().getColor(R.color.wallet_holo_blue_light))
+                        .setContentTitle(title)
+                        .setContentText(description)
+                        .extend(wearableExtender)
+                        .build();
+
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(this);
+
+        //fire off a notification
+        int notificationId = 1;
+        notificationManager.notify(notificationId, notification);
+        googleClient = new GoogleApiClient.Builder(this)
+                .addApi(Wearable.API)
+                .build();
+    }
+
 }
