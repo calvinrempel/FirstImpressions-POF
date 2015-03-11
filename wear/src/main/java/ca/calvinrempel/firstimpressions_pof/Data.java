@@ -13,7 +13,7 @@ public class Data {
 
     public static Profile getChris()
     {
-        Profile result;
+        Profile result = null;
         try {
             result = new Profile( new JSONObject(chris) );
         }catch (Exception e){}
@@ -24,7 +24,7 @@ public class Data {
 
     public static Profile getRhea()
     {
-        Profile result;
+        Profile result = null;
         try {
             result = new Profile( new JSONObject(rhea) );
         }catch (Exception e){}
@@ -35,9 +35,9 @@ public class Data {
 
     public static Meeting getMeeting()
     {
-        Profile result;
+        Meeting result= null;
         try {
-            result = new Profile( new JSONObject(tryst) );
+            result = new Meeting( new JSONObject(tryst) );
         }catch (Exception e){}
         finally {
             return result;
