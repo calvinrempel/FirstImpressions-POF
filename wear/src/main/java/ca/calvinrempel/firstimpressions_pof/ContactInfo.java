@@ -2,14 +2,9 @@ package ca.calvinrempel.firstimpressions_pof;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 
 public class ContactInfo extends Activity {
@@ -36,53 +31,18 @@ public class ContactInfo extends Activity {
         FontManager.setFont(this, (TextView) findViewById(R.id.birthday), "cicero.ttf");
         FontManager.setFont(this, (TextView) findViewById(R.id.gender), "cicero.ttf");
 
-        //fetch the current user from the database
-        Mongo.getProfile(
-                new MongoReceiver() {
-                     @Override
-                     public void process(JSONArray result) {
-                         try {
-                             user = new Profile( result.getJSONObject(0) );
-                         } catch (JSONException f) {
-                             Log.d("GetProfile", f.getLocalizedMessage());
-                         }
-                         Toast.makeText(getBaseContext(), user.getName(), Toast.LENGTH_LONG).show();
-                     }
-                 }
-                ,1);
-
-        // Get the meeting from the database
-        Mongo.getMeetings(
-                new MongoReceiver() {
-                    @Override
-                    public void process(JSONArray result) {
-                        try {
-                            tryst = new Meeting( result.getJSONObject(0) );
-                        } catch (JSONException f) {
-                            Log.d("GetMeetings", f.getLocalizedMessage());
-                        }
-                    }
-                }
-        , user.getId() );
-
-        // Get the other user from the database
-        Mongo.getProfile(
-                new MongoReceiver() {
-                    @Override
-                    public void process(JSONArray result) {
-                        try {
-                            other = new Profile( result.getJSONObject(0) );
-                        }catch (JSONException e){
-                            Log.d("GetProfile", e.getLocalizedMessage());
-                        }
-                    }
-                }
-        , tryst.getOther(user) );
-
-
+        other = Data.getRhea();
         TextView name = (TextView) findViewById(R.id.name);
         name.setText(name.getText() + other.getName());
 
+        TextView age = (TextView) findViewById(R.id.age);
+        age.setText(age.getText() + "" + other.getAge());
+
+        TextView gender = (TextView) findViewById(R.id.gender);
+        gender.setText(gender.getText() + other.getGender());
+
+        TextView birthday = (TextView) findViewById(R.id.birthday);
+        birthday.setText( birthday.getText() + other.getBirthDate().toString() );
     }
 
 

@@ -76,4 +76,5 @@ public class Profile {
     public HashMap<String,TreeSet<String>> getLikes(){ return likes; }
     public URL getPicture(){ return picture; }
     public int getId(){ return id; }
+    public int getAge(){ return 2015-birthDate.get(Calendar.YEAR); }
 }
