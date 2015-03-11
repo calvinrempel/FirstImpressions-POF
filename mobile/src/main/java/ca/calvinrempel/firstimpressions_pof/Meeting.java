@@ -88,11 +88,11 @@ public class Meeting {
 
     }
 
-    public int getOther( Profile p )
+    public int getOther( int id )
     {
-        if( user1.id == p.getId() )
+        if( user1.id == id )
             return user2.id;
-        else if( user2.id == p.getId() )
+        else if( user2.id == id )
             return user1.id;
         else // We shouldn't get here
             return 0;
