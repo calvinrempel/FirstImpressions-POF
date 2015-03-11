@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 public class DateInfo extends Activity
 {
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -22,6 +21,16 @@ public class DateInfo extends Activity
         FontManager.setFont(this, (TextView) findViewById(R.id.date), "cicero.ttf");
         FontManager.setFont(this, (TextView) findViewById(R.id.time), "cicero.ttf");
 
+        Meeting tryst = Data.getMeeting();
+
+        TextView where = (TextView) findViewById(R.id.where);
+        where.setText( where.getText() + Data.getPlace() );
+
+        TextView date = (TextView) findViewById(R.id.date);
+        date.setText(date.getText() + Data.getDate() );
+
+        TextView time = (TextView) findViewById(R.id.time);
+        time.setText(time.getText() + Data.getTime());
     }
 
 

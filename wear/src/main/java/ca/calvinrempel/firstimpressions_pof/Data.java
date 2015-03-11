@@ -43,4 +43,9 @@ public class Data {
             return result;
         }
     }
+
+    public static String getPlace(){ return "Plenty of Fish Offices"; }
+    public static String getDate(){ return "March 11th, 2015"; }
+    public static String getTime(){ return "4:30"; }
+
 }

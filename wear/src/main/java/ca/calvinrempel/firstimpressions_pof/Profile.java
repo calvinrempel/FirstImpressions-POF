@@ -77,4 +77,5 @@ public class Profile {
     public URL getPicture(){ return picture; }
     public int getId(){ return id; }
     public int getAge(){ return 2015-birthDate.get(Calendar.YEAR); }
+    public String[] getLikeList( String s ){ return (String[])likes.get(s).toArray(); }
 }

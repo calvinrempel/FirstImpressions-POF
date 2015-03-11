@@ -29,13 +29,13 @@ public class LikesDetails extends Activity
         title.setText(i.getStringExtra("category"));
         FontManager.setFont(this, title, "biko.otf");
 
+        Profile p = Data.getRhea();
 
-        //TODO:
         //Populate this from the JSON
-        String[] categories = new String[] {"Movies", "Books", "Songs" };
+        String[] likes = p.getLikeList( i.getStringExtra("category").toLowerCase() );
 
         //define a new adapter for the list
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item_details, R.id.textView, categories);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item_details, R.id.textView, likes);
 
         //assign the adapter to the listView
         listView.setAdapter(adapter);
