@@ -27,7 +27,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-
+/**
+ * MainActivity implements the handheld portion of the app that
+ */
 public class MainActivity extends Activity
 {
     private FencedMeetingManager meetingManager;
