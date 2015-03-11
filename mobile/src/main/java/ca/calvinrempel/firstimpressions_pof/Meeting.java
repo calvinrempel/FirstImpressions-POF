@@ -56,38 +56,38 @@ public class Meeting implements Serializable{
         }
     }
 
-    public void isNearby( Profile p, boolean near )
+    public void isNearby( int id, boolean near )
     {
-        if( user1.id == p.getId() )
+        if( user1.id == id )
             user1.nearby = near;
-        else if( user2.id == p.getId() )
+        else if( user2.id == id )
             user2.nearby = near;
     }
 
 
-    public boolean isNearby( Profile p  )
+    public boolean isNearby( int id  )
     {
-        if( user1.id == p.getId() )
+        if( user1.id == id )
             return user1.nearby;
-        else if( user2.id == p.getId() )
+        else if( user2.id == id )
             return user2.nearby;
         else // We shouldn't get here
             return false;
     }
 
-    public void hasArrived( Profile p, boolean arrive )
+    public void hasArrived( int id, boolean arrive )
     {
-        if( user1.id == p.getId() )
+        if( user1.id == id )
             user1.arrived = arrive;
-        else if( user2.id == p.getId() )
+        else if( user2.id == id )
             user2.arrived = arrive;
     }
 
-    public boolean hasArrived( Profile p )
+    public boolean hasArrived( int id )
     {
-        if( user1.id == p.getId() )
+        if( user1.id == id )
             return user1.arrived;
-        else if( user2.id == p.getId() )
+        else if( user2.id == id )
             return user2.arrived;
         else // We shouldn't get here
             return false;
