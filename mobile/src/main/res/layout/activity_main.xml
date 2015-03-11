@@ -6,51 +6,31 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <TextView android:text="Voice Command" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:text="Tap Me"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="startVoiceCommand" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtId"
-        android:text="1" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile ID"
-        android:id="@+id/textView" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GET PROFILE"
-            android:id="@+id/btnProfile"
-            android:nestedScrollingEnabled="false"
-            android:onClick="getProfile" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GET DATE"
-            android:id="@+id/btnDates"
-            android:onClick="getMeeting" />
-    </LinearLayout>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/txtResult" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trigger Nearby"
+        android:id="@+id/nearby"
+        android:onClick="triggerNearby"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trigger Arrival"
+        android:id="@+id/arrival"
+        android:onClick="triggerArrival"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trigger TalkingPoint"
+        android:id="@+id/talkingpoint"
+        android:onClick="triggerNearby"/>
 
 </LinearLayout>
