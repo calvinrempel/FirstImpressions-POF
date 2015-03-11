@@ -23,9 +23,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * MainActivity implements the handheld portion of the app that
- */
+
 public class MainActivity extends Activity
 {
     private FencedMeetingManager meetingManager;
@@ -122,30 +120,7 @@ public class MainActivity extends Activity
         voiceNotifyDetails.add("here");
         voiceNotifyDetails.add("can't come");
 
-        //add notification features
-        NotificationCompat.WearableExtender wearableExtender =
-                new NotificationCompat.WearableExtender()
-                        .setHintShowBackgroundOnly(true);
-
-        Notification notification =
-                new NotificationCompat.Builder(this)
-                        .setVibrate(new long[] {100, 250, 100, 250, 100, 25})
-                        .setLights(Color.YELLOW, 500, 500)
-                        .setSmallIcon(R.drawable.fish)
-                        .setLargeIcon(BitmapFactory.decodeResource(
-                                getResources(), R.drawable.fishes))
-                        .setColor(getResources().getColor(R.color.wallet_holo_blue_light))
-                        .setContentTitle("Your date has arrived.")
-                        .setContentText("Susan has arrived at your meeting location!")
-                        .extend(wearableExtender)
-                        .build();
-
-        NotificationManagerCompat notificationManager =
-                NotificationManagerCompat.from(this);
-
-        //fire off a notification
-        int notificationId = 1;
-        notificationManager.notify(notificationId, notification);
+        sendNotification("Hello", "Test");
     }
 
     public void onResume()
@@ -418,4 +393,53 @@ public class MainActivity extends Activity
                     }
                 } ,id );
     }
+
+    @Override
+    public void process(JSONArray result) {
+        PutDataRequest request;
+        try {
+            // Set the result as the first object in the returned array
+            m = new Meeting(result.getJSONObject(0));
+            request = PutDataRequest.create("meet/one");
+            request.setData( m.serialize() );
+        }catch (Exception e){}
+    }
+
+    /**
+     * @Author Rhea Lauzon
+     * @param title -- Title of the notification
+     * @param description -- Description of the notification
+     * Sends a notification to the wearable
+     */
+    public void sendNotification(String title, String description)
+    {
+        //add notification features
+        NotificationCompat.WearableExtender wearableExtender =
+                new NotificationCompat.WearableExtender()
+                        .setHintShowBackgroundOnly(true);
+
+        Notification notification =
+                new NotificationCompat.Builder(this)
+                        .setVibrate(new long[] {100, 250, 100, 250, 100, 25})
+                        .setLights(Color.BLUE, 500, 500)
+                        .setSmallIcon(R.drawable.fish)
+                        .setLargeIcon(BitmapFactory.decodeResource(
+                                getResources(), R.drawable.fishes))
+                        .setColor(getResources().getColor(R.color.wallet_holo_blue_light))
+                        .setContentTitle(title)
+                        .setContentText(description)
+                        .extend(wearableExtender)
+                        .build();
+
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(this);
+
+        //fire off a notification
+        int notificationId = 1;
+        notificationManager.notify(notificationId, notification);
+        googleClient = new GoogleApiClient.Builder(this)
+                .addApi(Wearable.API)
+                .build();
+    }
+
 }
