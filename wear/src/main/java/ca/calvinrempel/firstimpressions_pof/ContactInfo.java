@@ -42,7 +42,7 @@ public class ContactInfo extends Activity {
         gender.setText(gender.getText() + other.getGender());
 
         TextView birthday = (TextView) findViewById(R.id.birthday);
-        birthday.setText( birthday.getText() + other.getBirthDate()) );
+        birthday.setText( birthday.getText() + other.getBirthDate() );
     }
 
 
