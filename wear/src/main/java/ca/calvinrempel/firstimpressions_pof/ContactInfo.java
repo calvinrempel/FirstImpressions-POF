@@ -17,7 +17,7 @@ public class ContactInfo extends Activity {
     // You!
     private Profile user;
 
-    // Hot date you have coming up
+    //Date you have coming up
     private Meeting tryst;
 
     // User you're on a date with
@@ -29,6 +29,12 @@ public class ContactInfo extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_info);
+
+        // Set the custom fonts
+        FontManager.setFont(this, (TextView) findViewById(R.id.date), "cicero.ttf");
+        FontManager.setFont(this, (TextView) findViewById(R.id.age), "cicero.ttf");
+        FontManager.setFont(this, (TextView) findViewById(R.id.birthday), "cicero.ttf");
+        FontManager.setFont(this, (TextView) findViewById(R.id.gender), "cicero.ttf");
 
         //fetch the current user from the database
         Mongo.getProfile(
@@ -44,9 +50,6 @@ public class ContactInfo extends Activity {
                      }
                  }
                 ,1);
-
-        TextView name = (TextView) findViewById(R.id.name);
-        name.setText(name.getText() + user.getName());
 
         // Get the meeting from the database
         Mongo.getMeetings(
@@ -75,6 +78,10 @@ public class ContactInfo extends Activity {
                     }
                 }
         , tryst.getOther(user) );
+
+
+        TextView name = (TextView) findViewById(R.id.name);
+        name.setText(name.getText() + other.getName());
 
     }
 
