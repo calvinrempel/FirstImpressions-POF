@@ -22,6 +22,7 @@ public class WaitLocationService extends IntentService {
     }
 
     private WaitState state;
+    private Profile profile;
 
     /**
      * @author Chris Klassen
@@ -42,6 +43,19 @@ public class WaitLocationService extends IntentService {
         int talkingTime = workIntent.getExtras().getInt("talkingTime");
         int myId = workIntent.getExtras().getInt("myId");
         final int otherId = workIntent.getExtras().getInt("otherId");
+
+        Mongo.getProfile(new MongoReceiver() {
+            @Override
+            public void process(JSONArray result) {
+                try {
+                    profile = new Profile(result.getJSONObject(0));
+                }
+                catch (Exception e)
+                {
+                    //
+                }
+            }
+        }, otherId);
 
         state = WaitState.ARRIVAL;
 
@@ -92,6 +106,9 @@ public class WaitLocationService extends IntentService {
                     SystemClock.sleep(talkingTime * 1000);
 
                     // Create a Talking Point card
+                    if (profile != null) {
+                        sendNotification("Talking Point", TalkingPoints.getRandomTalkingPoint(profile));
+                    }
                     break;
                 }
             }
