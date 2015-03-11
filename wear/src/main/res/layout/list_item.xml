@@ -9,7 +9,7 @@
         android:layout_width="0dp"
         android:layout_weight="0.3"
         android:layout_height="fill_parent"
-        android:src="@drawable/fishes" />
+        android:src="@drawable/fish" />
 
     <TextView
         android:gravity="center"

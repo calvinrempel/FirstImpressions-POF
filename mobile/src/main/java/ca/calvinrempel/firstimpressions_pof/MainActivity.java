@@ -467,4 +467,19 @@ public class MainActivity extends Activity
                 .build();
     }
 
+
+    public void triggerNearby(View view)
+    {
+        sendNotification("Rhea Lauzon", "Rhea is on her way to the date!");
+    }
+
+    public void triggerArrival(View view)
+    {
+        sendNotification("Rhea Lauzon", "Rhea has arrived at the location of your date!");
+    }
+
+    public void triggerTalkingPoint(View view)
+    {
+        sendNotification("Rhea Lauzon", "Rhea likes the movie 'Face Off'");
+    }
 }
