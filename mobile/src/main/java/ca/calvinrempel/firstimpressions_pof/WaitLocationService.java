@@ -44,19 +44,6 @@ public class WaitLocationService extends IntentService {
         int myId = workIntent.getExtras().getInt("myId");
         final int otherId = workIntent.getExtras().getInt("otherId");
 
-        Mongo.getProfile(new MongoReceiver() {
-            @Override
-            public void process(JSONArray result) {
-                try {
-                    profile = new Profile(result.getJSONObject(0));
-                }
-                catch (Exception e)
-                {
-                    //
-                }
-            }
-        }, otherId);
-
         state = WaitState.ARRIVAL;
 
         // Loop infinitely until the date ends
@@ -64,7 +51,6 @@ public class WaitLocationService extends IntentService {
         {
             switch(state)
             {
-                // CASE IGNORED - NO TIME!
                 case NEARBY:
                 {
                     // Sleep for the allotted period of time
@@ -89,7 +75,7 @@ public class WaitLocationService extends IntentService {
                                 if (meeting.hasArrived(otherId))
                                 {
                                     state = WaitState.TALKING;
-                                    sendNotification("Your Date has Arrived!", "Cool...");
+                                    //sendNotification("Your Date has Arrived!", "Cool...");
                                 }
                             }
                             catch (Exception e)
@@ -106,9 +92,6 @@ public class WaitLocationService extends IntentService {
                     SystemClock.sleep(talkingTime * 1000);
 
                     // Create a Talking Point card
-                    if (profile != null) {
-                        sendNotification("Talking Point", TalkingPoints.getRandomTalkingPoint(profile));
-                    }
                     break;
                 }
             }
