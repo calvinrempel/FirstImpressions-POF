@@ -17,6 +17,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.Wearable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -27,6 +30,7 @@ import java.util.List;
 public class MainActivity extends Activity
 {
     private FencedMeetingManager meetingManager;
+    private GoogleApiClient googleClient;
 
     /** The request code used by this application for voice command */
     private static final int SPEECH_REQUEST_CODE = 0;
@@ -389,20 +393,10 @@ public class MainActivity extends Activity
                         try {
                             // Set the result as the first object in the returned array
                             resultText.setText(result.getJSONObject(0).toString(2));
-                        }catch (JSONException e){}
+                        } catch (JSONException e) {
+                        }
                     }
-                } ,id );
-    }
-
-    @Override
-    public void process(JSONArray result) {
-        PutDataRequest request;
-        try {
-            // Set the result as the first object in the returned array
-            m = new Meeting(result.getJSONObject(0));
-            request = PutDataRequest.create("meet/one");
-            request.setData( m.serialize() );
-        }catch (Exception e){}
+                }, id);
     }
 
     /**
