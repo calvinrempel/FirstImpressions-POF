@@ -33,7 +33,7 @@ import java.util.List;
 public class MainActivity extends Activity
 {
     private FencedMeetingManager meetingManager;
-    private GoogleApiClient googleClient;
+    private static GoogleApiClient googleClient;
     private static final int MY_ID = 1;
 
     /** The request code used by this application for voice command */
@@ -83,15 +83,6 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Create the waiting service intent
-        Intent msgIntent = new Intent(this, WaitLocationService.class);
-        msgIntent.putExtra("nearbyTime", NEARBY_WAIT);
-        msgIntent.putExtra("arrivalTime", ARRIVAL_WAIT);
-        msgIntent.putExtra("talkingTime", TALKING_WAIT);
-
-        // Start the waiting service
-        startService(msgIntent);
 
         // Set up Location options
         voiceLocationOptions.add("what location");
@@ -154,6 +145,18 @@ public class MainActivity extends Activity
 
         // Get the users meetings
         getMeeting();
+
+
+        // Create the waiting service intent
+        Intent msgIntent = new Intent(this, WaitLocationService.class);
+        msgIntent.putExtra("nearbyTime", NEARBY_WAIT);
+        msgIntent.putExtra("arrivalTime", ARRIVAL_WAIT);
+        msgIntent.putExtra("talkingTime", TALKING_WAIT);
+        msgIntent.putExtra("myId", MY_ID);
+        msgIntent.putExtra("otherId", meeting.getOther(MY_ID));
+
+        // Start the waiting service
+        startService(msgIntent);
     }
 
     @Override
@@ -185,12 +188,15 @@ public class MainActivity extends Activity
     {
         public void onNowHere(FencedMeeting meeting)
         {
+            MainActivity.this.meeting.hasArrived(MY_ID, true);
+            Mongo.createOrUpdate(MainActivity.this.meeting);
             sendNotification("BOOPITY BEEP BOOP", "You have arrived at your destination.");
             Log.d("GEO", "User: " + meeting.getOtherUserId() + " now here.");
         }
 
         public void onNoLongerHere(FencedMeeting meeting)
         {
+            MainActivity.this.meeting.hasArrived(MY_ID, false);
             sendNotification("BOOPITY BEEP BOOP", "Why you leavin' bro?.");
             Log.d("GEO", "User: " + meeting.getOtherUserId() + " no longer here.");
         }
