@@ -38,6 +38,7 @@ public class Profile implements Serializable{
     {
         String[] date;
         JSONArray likeArray;
+        JSONObject tmp;
         TreeSet<String> likeList;
         birthDate = Calendar.getInstance();
         likes = new HashMap<String, TreeSet<String>>();
@@ -57,8 +58,9 @@ public class Profile implements Serializable{
             );
 
             // Populate the likes with values
+            tmp = obj.getJSONObject("likes");
             for (int i = 0; i < LIKES.length; i++) {
-                likeArray = obj.getJSONArray(LIKES[i]);
+                likeArray = tmp.getJSONArray(LIKES[i]);
                 likeList = new TreeSet<String>();
 
                 // Iterate through a single type of like
@@ -69,7 +71,7 @@ public class Profile implements Serializable{
                 likes.put( LIKES[i], likeList );
             }
         }catch ( JSONException e ){
-            Log.d( "Profile JSON", e.getLocalizedMessage() );
+            Log.d( "Profile JSON", obj.toString() );
         }catch ( MalformedURLException e ){
             Log.d( "Profile URL", e.getLocalizedMessage() );
         }

@@ -33,8 +33,9 @@ import java.util.List;
 public class MainActivity extends Activity
 {
     private FencedMeetingManager meetingManager;
-    private static GoogleApiClient googleClient;
+    private GoogleApiClient googleClient;
     private static final int MY_ID = 1;
+    private Profile p;
 
     /** The request code used by this application for voice command */
     private static final int SPEECH_REQUEST_CODE = 0;
@@ -122,6 +123,15 @@ public class MainActivity extends Activity
         voiceNotifyDetails.add("can't come");
 
         sendNotification("Hello", "Test");
+
+        Mongo.getProfile( new MongoReceiver() {
+            @Override
+            public void process(JSONArray result) {
+                try {
+                    p = new Profile(result.getJSONObject(0));
+                }catch (JSONException e){}
+            }
+        }, MY_ID);
     }
 
     /**
@@ -393,6 +403,8 @@ public class MainActivity extends Activity
                         }catch (JSONException e){}
                     }
                 } ,id );
+
+        Toast.makeText(this, p.getLikes().toString(), Toast.LENGTH_LONG).show();
     }
 
     // SAMPLE CODE FOR GETTING A MEETING BY USER ID
